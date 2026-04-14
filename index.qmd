@@ -3,7 +3,6 @@ title: "Decision Tree Challenge"
 subtitle: "Feature Importance and Categorical Variable Encoding"
 format:
   html: default
-  pdf: default
 execute:
   echo: true
   eval: true
@@ -371,13 +370,18 @@ plt.show()
 
 1. **Numerical vs Categorical Analysis:** Provide a clear, well-reasoned answer to question 1 about how zip codes should be modelled. Your answer should demonstrate understanding of why categorical variables need special treatment in decision trees.
 
+Answer:
 ### Questions to Answer for 85% Grade on Challenge
 
 2. **R vs Python Implementation Analysis:** Provide a thorough analysis of question 2, including investigation of the official documentation for both `rpart` (R) and `sklearn.tree.DecisionTreeRegressor` (Python). Your analysis should explain the technical differences and provide a reasoned opinion about which implementation handles categorical variables better.  You do NOT have to run R-code.
 
+Answer:
+
 ### Questions to Answer for 95% - 100% Grade on Challenge
 
 3. **Professional Presentation:** Your discussion answers should be written in a professional, engaging style that would be appropriate for a business audience learning about one-hot encoding and decision trees. Avoid technical jargon and focus on practical implications.  Include a specific quote from the official documentation of `sklearn.tree.DecisionTreeRegressor` that supports your analysis. 
+
+Answer: 
 
 ## Submission Checklist ✅
 
