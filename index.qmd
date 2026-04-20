@@ -2,56 +2,62 @@
 title: "Decision Tree Challenge"
 subtitle: "Feature Importance and Categorical Variable Encoding"
 format:
-  html: default
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    smooth-scroll: true
+    code-fold: true
+    code-tools: true
 execute:
-  echo: true
+  echo: false
   eval: true
+  warning: false
+  message: false
 ---
 
-# 🌳 Decision Tree Challenge - Feature Importance and Variable Encoding
+## Challenge overview
 
-## Challenge Overview
-
-**Your Mission:** Create a simple GitHub Pages site that demonstrates how decision trees measure feature importance and analyzes the critical differences between categorical and numerical variable encoding. You'll answer two key discussion questions by adding narrative to a pre-built analysis and posting those answers to your GitHub Pages site as a rendered HTML document.
+**Goal:** Demonstrate how decision trees measure feature importance, and why **categorical vs. numeric encoding** changes both model behavior and interpretation. You’ll add narrative answers to the discussion questions at the bottom of this page.
 
 ::: {.callout-warning}
-## ⚠️ AI Partnership Required
+## AI partnership
 
-This challenge pushes boundaries intentionally. You'll tackle problems that normally require weeks of study, but with Cursor AI as your partner (and your brain keeping it honest), you can accomplish more than you thought possible.
+This challenge moves quickly. Use AI to accelerate execution, and use your own judgment to validate that the outputs make sense.
 
-**The new reality:** The four stages of competence are Ignorance → Awareness → Learning → Mastery. AI lets us produce Mastery-level work while operating primarily in the Awareness stage. I focus on awareness training, you leverage AI for execution, and together we create outputs that used to require years of dedicated study.
+**Expectation:** Clear reasoning, correct modeling choices, and well-cited claims.
 :::
 
-## The Decision Tree Problem 🎯
+## The decision tree problem
 
 > "The most important thing in communication is hearing what isn't said." - Peter Drucker
 
-**The Core Problem:** Decision trees are often praised for their interpretability and ability to handle both numerical and categorical variables. But what happens when we encode categorical variables as numbers? How does this affect our understanding of feature importance?
+**Core question:** Decision trees are often praised for interpretability. But what happens when we encode categorical variables as numbers? How does that affect **feature importance**?
 
-**What is Feature Importance?** In decision trees, feature importance measures how much each variable contributes to reducing impurity (or improving prediction accuracy) across all splits in the tree. It's a key metric for understanding which variables matter most for your predictions.
+**Feature importance:** In decision trees, feature importance measures how much each variable contributes to reducing impurity across splits in the tree.
 
 ::: {.callout-important}
-## 🎯 The Key Insight: Encoding Matters for Interpretability
+## Key insight: encoding affects interpretability
 
-**The problem:** When we encode categorical variables as numerical values (like 1, 2, 3, 4...), decision trees treat them as if they have a meaningful numerical order. This can completely distort our analysis.
+When we encode categorical variables as numbers (like 1, 2, 3, 4...), a tree can treat them as if they have a meaningful order. That can create splits that don’t correspond to real-world structure.
 
-**The Real-World Context:** In real estate, we know that neighborhood quality, house style, and other categorical factors are crucial for predicting home prices. But if we encode these as numbers, we might get misleading insights about which features actually matter most.
+**Real-world context:** In real estate, neighborhood is a major driver of price. If we encode neighborhood-like variables incorrectly, we can get misleading importance rankings.
 
-**The Devastating Reality:** Even sophisticated machine learning models can give us completely wrong insights about feature importance if we don't properly encode our variables. A categorical variable that should be among the most important might appear irrelevant, while a numerical variable might appear artificially important.
+**Practical consequence:** A truly important categorical feature can look unimportant, or vice-versa, depending on encoding.
 
 :::
 
 Let's assume we want to predict house prices and understand which features matter most. The key question is: **How does encoding categorical variables as numbers affect our understanding of feature importance?**
 
-## The Ames Housing Dataset 🏠
+## The Ames Housing dataset
 
-We are analyzing the Ames Housing dataset which contains detailed information about residential properties sold in Ames, Iowa from 2006 to 2010. This dataset is perfect for our analysis because it contains a categorical variable (like zip code) and numerical variables (like square footage, year built, number of bedrooms).
+We are analyzing the Ames Housing dataset, which contains detailed information about residential properties sold in Ames, Iowa (2006–2010). It includes both numeric variables (e.g., square footage) and a geographic identifier (`zipCode`) that should be treated as categorical.
 
-## The Problem: ZipCode as Numerical vs Categorical
+## The problem: `zipCode` as numeric vs. categorical
 
-**Key Question:** What happens when we treat zipCode as a numerical variable in a decision tree? How does this affect feature importance interpretation?
+**Key question:** What happens when we treat `zipCode` as a numeric variable in a decision tree? How does this affect feature importance interpretation?
 
-**The Issue:** Zip codes (50010, 50011, 50012, 50013) are categorical variables representing discrete geographic areas, i.e. neighborhoods. When treated as numerical, the tree might split on "zipCode > 50012.5" - which has no meaningful interpretation for house prices.  Zip codes are non-ordinal categorical variables meaning they have no inherent order that aids house price prediction (i.e. zip code 99999 is not the priceiest zip code).
+**Issue:** Zip codes (50010, 50011, 50012, 50013) are labels for discrete geographic areas. If treated as numeric, the tree can create splits like “`zipCode` > 50012.5”, which has no real interpretation. Zip codes are **non-ordinal** categorical variables (no meaningful ranking).
 
 ## Data Loading and Model Building
 
@@ -181,11 +187,8 @@ Now let's repeat the analysis with zipCode properly encoded as categorical varia
 
 ```{python}
 #| label: categorical-python
-#| echo: true
 #| include: false
 # One-hot encode zipCode
-import pandas as pd
-
 # Create one-hot encoded zipCode
 zipcode_encoded = pd.get_dummies(model_data['zipCode'], prefix='zipCode')
 model_data_cat = pd.concat([model_data.drop('zipCode', axis=1), zipcode_encoded], axis=1)
@@ -261,7 +264,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-## Challenge Requirements 📋
+## Challenge requirements
 
 ### Minimum Requirements for Any Points on Challenge
 
@@ -281,10 +284,10 @@ plt.show()
    - Your site will be available at: `https://[your-username].github.io/decTreeChallenge/`
    - **Note:** It may take a few minutes for the site to become available after enabling Pages
 
-## Getting Started: Repository Setup 🚀
+## Getting started: repository setup
 
 ::: {.callout-important}
-## 📁 Quick Start with Starter Repository
+## Quick start with starter repository
 
 **Step 1:** Fork the starter repository to your github account at [https://github.com/flyaflya/decTreeChallenge.git](https://github.com/flyaflya/decTreeChallenge.git)
 
@@ -294,7 +297,7 @@ plt.show()
 :::
 
 ::: {.callout-tip}
-## 💡 Why Use the Starter Repository?
+## Why use the starter repository?
 
 **Benefits:**
 
@@ -307,7 +310,7 @@ plt.show()
 ### Getting Started Tips
 
 ::: {.callout-note}
-## 🎯 Navy SEALs Motto
+## Tip
 
 > "Slow is Smooth and Smooth is Fast"
 
@@ -315,21 +318,31 @@ plt.show()
 :::
 
 
-## Discussion Questions for Challenge
+## Discussion questions
 
-**Your Task:** Add thoughtful narrative answers to these two questions in the Discussion Questions section of your rendered HTML site.
+### 1) Numerical vs. categorical encoding
 
-1. **Numerical vs Categorical Encoding:** There are two modelsin Python written above. For each language, the models differ by how zip code is modelled, either as a numerical variable or as a categorical variable. Given what you know about zip codes and real estate prices, how should zip code be modelled, numerically or categorically?  Is zipcode and ordinal or non-ordinal variable?
+**Prompt:** There are two Python models above. They differ by how `zipCode` is modeled: numeric vs. categorical. Given what you know about zip codes and real estate prices, how should `zipCode` be modeled? Is `zipCode` ordinal or non-ordinal?
 
-Answer: Zip code should be modeled as a categorical variable, not a numerical one. Even though zip codes are numbers, they don’t have any real order or ranking, so treating them like regular numbers can mislead the model. In this case, zip code is a non-ordinal variable, meaning the values are just labels for locations, not something where higher or lower numbers mean anything. Modeling it as a category lets the model understand that each zip code represents a different area, which is more realistic for real estate prices.
+**Answer:** `zipCode` should be modeled as **categorical** (non-ordinal). Even though it is stored as a number, the values are **labels for locations**, not quantities with a meaningful ranking or distance. Treating `zipCode` as numeric invites nonsensical threshold splits (e.g., `zipCode > 50012.5`) and can distort feature importance interpretation.
 
-2. **R vs Python Implementation Differences:** When modelling zip code as a categorical variable, the output tree and feature importance would differ quite significantly had you used R as opposed to Python. Investigate why this is the case.  What does R offer that Python does not? Which language would you say does a better job of modelling zip code as a categorical variable? Can you quote the documentation at [https://scikit-learn.org/stable/modules/tree.html](https://scikit-learn.org/stable/modules/tree.html) suggesting a weakness in the Python implementation? If so, please provide a quote from the documentation.
+### 2) R vs. Python implementation differences
 
-Answer: The main difference is how each language handles categories like zip codes. In R, tree models can treat zip codes as true categories and even group several of them together when making a split. In Python’s scikit-learn, zip codes have to be converted into numbers first, which can break the data into too many pieces and affect the results. Because of this, R is usually better for modeling something like zip code, since it keeps the data in its original categorical form. Python’s approach works, but the extra preprocessing can change how the tree looks and how important the variable seems.
+**Prompt:** When modeling `zipCode` as a categorical variable, the output tree and feature importance can differ significantly in R vs. Python. Why is this the case? What does R offer that Python does not? Which language models `zipCode` better? Quote scikit-learn documentation that suggests a weakness in the Python implementation.
 
-3. **Are There Any Suggestions for Implementing Decision Trees in Python With Prioper Categorical Handling?** Please poke around the Internet (AI is not as helpful with new libraries) for suggestions on how to implement decision trees in Python with better (i.e. not one-hot encoding) categorical handling.  Please provide a link to the source and a quote from the source.  There is not right answer here, but please provide a thoughtful answer, I am curious to see what you find.
+**Answer:** Many R tree implementations can treat a factor as truly categorical and evaluate splits that **group categories** (e.g., {50010, 50012} vs. {50011, 50013}). In scikit-learn’s classic `DecisionTree*` estimators, you typically must convert categories into numeric features first (often one-hot encoding), which changes both the representation and the set of candidate splits the algorithm can search over.
 
-Answer: A better way to handle categorical variables like zip code in Python decision trees is to avoid one-hot encoding and instead use methods that keep the data more compact and meaningful. The article you found explains that decision trees are naturally capable of working with categories by grouping them, rather than splitting each value into its own column. In fact, it notes that “the algorithm evaluates all possible ways to divide the categories into two… sets,” which shows that trees can directly separate groups of categories without extra encoding. However, this approach becomes computationally expensive when there are many categories, which is why standard Python libraries like scikit-learn do not implement it. Because of this limitation, one-hot encoding is often used, but it can create too many features and make the model less efficient. A more practical alternative is target encoding, which replaces each category with the average value of the target variable for that group. This reduces the number of splits the tree needs to consider while still keeping useful information about each category. The article highlights this by explaining that mean target encoding “reduces the search space… without losing the optimal split.” Another strong option is to use newer libraries like CatBoost or LightGBM, which are designed to handle categorical variables more effectively without one-hot encoding. Overall, the key idea is that decision trees do not inherently require one-hot encoding, and better approaches focus on preserving category relationships while keeping the model efficient.
+scikit-learn’s own documentation calls out this limitation:
+
+> “Able to handle both numerical and categorical data. However, the scikit-learn implementation does not support categorical variables for now.” — [Decision Trees (scikit-learn docs)](https://scikit-learn.org/stable/modules/tree.html)
+
+### 3) Better categorical handling in Python (beyond one-hot)
+
+**Prompt:** Find suggestions for implementing decision trees in Python with better categorical handling (i.e., not one-hot encoding). Provide a link and a quote from the source.
+
+**Answer:** A common recommendation is to use libraries that are designed to handle categorical features more directly (especially for high-cardinality categories like location identifiers). For example, CatBoost explicitly recommends avoiding one-hot encoding in many cases:
+
+> “Do not use one-hot encoding during preprocessing. This affects both the training speed and the resulting quality.” — [CatBoost documentation: Categorical features](https://catboost.ai/docs/en/features/categorical-features)
 
 
 
