@@ -125,24 +125,6 @@ plt.show()
 ## Feature Importance Analysis
 
 ### Python
-
-```{python}
-#| label: feature-importance-python
-#| echo: false
-
-# Extract and display feature importance
-importance_df = pd.DataFrame({
-    'Feature': X_train.columns,
-    'Importance': tree_model.feature_importances_
-}).sort_values('Importance', ascending=False)
-
-importance_df['Importance_Percent'] = (importance_df['Importance'] * 100).round(2)
-
-# Check zipCode ranking
-zipcode_rank = importance_df[importance_df['Feature'] == 'zipCode'].index[0] + 1
-zipcode_importance = importance_df[importance_df['Feature'] == 'zipCode']['Importance_Percent'].iloc[0]
-```
-
 ```{python}
 #| label: importance-plot-python
 #| echo: false
@@ -264,29 +246,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-## Challenge requirements
-
-### Minimum Requirements for Any Points on Challenge
-
-1. **Create a GitHub Pages Site:** Use the starter repository (see Repository Setup section below) to begin with a working template. The repository includes all the analysis code and visualizations above.
-
-2. **Add Discussion Narrative:** Add your answers to the two discussion questions below in the Discussion Questions section of the rendered HTML.
-
-3. **GitHub Repository:** Use your forked repository (from the starter repository) named "decTreeChallenge" in your GitHub account.
-
-4. **GitHub Pages Setup:** The repository should be made the source of your github pages:
-
-   - Go to your repository settings (click the "Settings" tab in your GitHub repository)
-   - Scroll down to the "Pages" section in the left sidebar
-   - Under "Source", select "Deploy from a branch"
-   - Choose "main" branch and "/ (root)" folder
-   - Click "Save"
-   - Your site will be available at: `https://[your-username].github.io/decTreeChallenge/`
-   - **Note:** It may take a few minutes for the site to become available after enabling Pages
-
-## Getting started: repository setup
-
-::: {.callout-important}
 
 ::: {.callout-note}
 ## Tip
