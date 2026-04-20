@@ -287,27 +287,6 @@ plt.show()
 ## Getting started: repository setup
 
 ::: {.callout-important}
-## Quick start with starter repository
-
-**Step 1:** Fork the starter repository to your github account at [https://github.com/flyaflya/decTreeChallenge.git](https://github.com/flyaflya/decTreeChallenge.git)
-
-**Step 2:** Clone your fork locally using Cursor (or VS Code)
-
-**Step 3:** You're ready to start! The repository includes pre-loaded data and a working template with all the analysis above.
-:::
-
-::: {.callout-tip}
-## Why use the starter repository?
-
-**Benefits:**
-
-- **Pre-loaded data:** All required data and analysis code is included
-- **Working template:** Basic Quarto structure (`index.qmd`) is ready
-- **No setup errors:** Avoid common data loading issues
-- **Focus on analysis:** Spend time on the discussion questions, not data preparation
-:::
-
-### Getting Started Tips
 
 ::: {.callout-note}
 ## Tip
@@ -324,25 +303,21 @@ plt.show()
 
 **Prompt:** There are two Python models above. They differ by how `zipCode` is modeled: numeric vs. categorical. Given what you know about zip codes and real estate prices, how should `zipCode` be modeled? Is `zipCode` ordinal or non-ordinal?
 
-**Answer:** `zipCode` should be modeled as **categorical** (non-ordinal). Even though it is stored as a number, the values are **labels for locations**, not quantities with a meaningful ranking or distance. Treating `zipCode` as numeric invites nonsensical threshold splits (e.g., `zipCode > 50012.5`) and can distort feature importance interpretation.
+**Answer:** Zip code should be modeled as a categorical variable, not a numerical one. Even though zip codes are numbers, they don’t have any real order or ranking, so treating them like regular numbers can mislead the model. In this case, zip code is a non-ordinal variable, meaning the values are just labels for locations, not something where higher or lower numbers mean anything. Modeling it as a category lets the model understand that each zip code represents a different area, which is more realistic for real estate prices.
 
 ### 2) R vs. Python implementation differences
 
 **Prompt:** When modeling `zipCode` as a categorical variable, the output tree and feature importance can differ significantly in R vs. Python. Why is this the case? What does R offer that Python does not? Which language models `zipCode` better? Quote scikit-learn documentation that suggests a weakness in the Python implementation.
 
-**Answer:** Many R tree implementations can treat a factor as truly categorical and evaluate splits that **group categories** (e.g., {50010, 50012} vs. {50011, 50013}). In scikit-learn’s classic `DecisionTree*` estimators, you typically must convert categories into numeric features first (often one-hot encoding), which changes both the representation and the set of candidate splits the algorithm can search over.
-
-scikit-learn’s own documentation calls out this limitation:
-
-> “Able to handle both numerical and categorical data. However, the scikit-learn implementation does not support categorical variables for now.” — [Decision Trees (scikit-learn docs)](https://scikit-learn.org/stable/modules/tree.html)
+**Answer:** The main difference is how each language handles categories like zip codes. In R, tree models can treat zip codes as true categories and even group several of them together when making a split. In Python’s scikit-learn, zip codes have to be converted into numbers first, which can break the data into too many pieces and affect the results. Because of this, R is usually better for modeling something like zip code, since it keeps the data in its original categorical form. Python’s approach works, but the extra preprocessing can change how the tree looks and how important the variable seems.
 
 ### 3) Better categorical handling in Python (beyond one-hot)
 
 **Prompt:** Find suggestions for implementing decision trees in Python with better categorical handling (i.e., not one-hot encoding). Provide a link and a quote from the source.
 
-**Answer:** A common recommendation is to use libraries that are designed to handle categorical features more directly (especially for high-cardinality categories like location identifiers). For example, CatBoost explicitly recommends avoiding one-hot encoding in many cases:
+**Answer:** A better way to handle categorical variables like zip code in Python decision trees is to avoid one-hot encoding and instead use methods that keep the data more compact and meaningful. The article you found explains that decision trees are naturally capable of working with categories by grouping them, rather than splitting each value into its own column. In fact, it notes that “the algorithm evaluates all possible ways to divide the categories into two… sets,” which shows that trees can directly separate groups of categories without extra encoding. However, this approach becomes computationally expensive when there are many categories, which is why standard Python libraries like scikit-learn do not implement it. Because of this limitation, one-hot encoding is often used, but it can create too many features and make the model less efficient. A more practical alternative is target encoding, which replaces each category with the average value of the target variable for that group. This reduces the number of splits the tree needs to consider while still keeping useful information about each category. The article highlights this by explaining that mean target encoding “reduces the search space… without losing the optimal split.” Another strong option is to use newer libraries like CatBoost or LightGBM, which are designed to handle categorical variables more effectively without one-hot encoding. Overall, the key idea is that decision trees do not inherently require one-hot encoding, and better approaches focus on preserving category relationships while keeping the model efficient. 
 
-> “Do not use one-hot encoding during preprocessing. This affects both the training speed and the resulting quality.” — [CatBoost documentation: Categorical features](https://catboost.ai/docs/en/features/categorical-features)
+https://towardsdatascience.com/decision-trees-natively-handle-categorical-data/
 
 
 
