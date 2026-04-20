@@ -116,8 +116,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-:::
-
 ## Feature Importance Analysis
 
 ### Python
@@ -343,13 +341,16 @@ plt.show()
 
 1. **Numerical vs Categorical Encoding:** There are two modelsin Python written above. For each language, the models differ by how zip code is modelled, either as a numerical variable or as a categorical variable. Given what you know about zip codes and real estate prices, how should zip code be modelled, numerically or categorically?  Is zipcode and ordinal or non-ordinal variable?
 
-Answer: Zip code should be modelled as a categorical variable and is a non-ordinal variable. The zip code in a numericalordering does not have any inherent relationship to house prices.
+Answer: Zip code should be modeled as a categorical variable, not a numerical one. Even though zip codes are numbers, they don’t have any real order or ranking, so treating them like regular numbers can mislead the model. In this case, zip code is a non-ordinal variable, meaning the values are just labels for locations, not something where higher or lower numbers mean anything. Modeling it as a category lets the model understand that each zip code represents a different area, which is more realistic for real estate prices.
 
 2. **R vs Python Implementation Differences:** When modelling zip code as a categorical variable, the output tree and feature importance would differ quite significantly had you used R as opposed to Python. Investigate why this is the case.  What does R offer that Python does not? Which language would you say does a better job of modelling zip code as a categorical variable? Can you quote the documentation at [https://scikit-learn.org/stable/modules/tree.html](https://scikit-learn.org/stable/modules/tree.html) suggesting a weakness in the Python implementation? If so, please provide a quote from the documentation.
 
-Answer: While R has a more mature implementation of decision trees, Python's implementation is more flexible and allows for more complex tree structures. R also has a more mature ecosystem of packages for decision tree implementation.
+Answer: The main difference is how each language handles categories like zip codes. In R, tree models can treat zip codes as true categories and even group several of them together when making a split. In Python’s scikit-learn, zip codes have to be converted into numbers first, which can break the data into too many pieces and affect the results. Because of this, R is usually better for modeling something like zip code, since it keeps the data in its original categorical form. Python’s approach works, but the extra preprocessing can change how the tree looks and how important the variable seems.
 
 3. **Are There Any Suggestions for Implementing Decision Trees in Python With Prioper Categorical Handling?** Please poke around the Internet (AI is not as helpful with new libraries) for suggestions on how to implement decision trees in Python with better (i.e. not one-hot encoding) categorical handling.  Please provide a link to the source and a quote from the source.  There is not right answer here, but please provide a thoughtful answer, I am curious to see what you find.
+
+Answer: A better way to handle categorical variables like zip code in Python decision trees is to avoid one-hot encoding and instead use methods that keep the data more compact and meaningful. The article you found explains that decision trees are naturally capable of working with categories by grouping them, rather than splitting each value into its own column. In fact, it notes that “the algorithm evaluates all possible ways to divide the categories into two… sets,” which shows that trees can directly separate groups of categories without extra encoding. However, this approach becomes computationally expensive when there are many categories, which is why standard Python libraries like scikit-learn do not implement it. Because of this limitation, one-hot encoding is often used, but it can create too many features and make the model less efficient. A more practical alternative is target encoding, which replaces each category with the average value of the target variable for that group. This reduces the number of splits the tree needs to consider while still keeping useful information about each category. The article highlights this by explaining that mean target encoding “reduces the search space… without losing the optimal split.” Another strong option is to use newer libraries like CatBoost or LightGBM, which are designed to handle categorical variables more effectively without one-hot encoding. Overall, the key idea is that decision trees do not inherently require one-hot encoding, and better approaches focus on preserving category relationships while keeping the model efficient.
+
 
 ## Grading Rubric 🎓
 

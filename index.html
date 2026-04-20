@@ -218,7 +218,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>:::</p>
 </section>
 </section>
 <section id="feature-importance-analysis" class="level2">
@@ -418,10 +417,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="discussion-questions-for-challenge">Discussion Questions for Challenge</h2>
 <p><strong>Your Task:</strong> Add thoughtful narrative answers to these two questions in the Discussion Questions section of your rendered HTML site.</p>
 <ol type="1">
-<li><p><strong>Numerical vs Categorical Encoding:</strong> There are two modelsin Python written above. For each language, the models differ by how zip code is modelled, either as a numerical variable or as a categorical variable. Given what you know about zip codes and real estate prices, how should zip code be modelled, numerically or categorically? Is zipcode and ordinal or non-ordinal variable?</p></li>
-<li><p><strong>R vs Python Implementation Differences:</strong> When modelling zip code as a categorical variable, the output tree and feature importance would differ quite significantly had you used R as opposed to Python. Investigate why this is the case. What does R offer that Python does not? Which language would you say does a better job of modelling zip code as a categorical variable? Can you quote the documentation at <a href="https://scikit-learn.org/stable/modules/tree.html">https://scikit-learn.org/stable/modules/tree.html</a> suggesting a weakness in the Python implementation? If so, please provide a quote from the documentation.</p></li>
-<li><p><strong>Are There Any Suggestions for Implementing Decision Trees in Python With Prioper Categorical Handling?</strong> Please poke around the Internet (AI is not as helpful with new libraries) for suggestions on how to implement decision trees in Python with better (i.e.&nbsp;not one-hot encoding) categorical handling. Please provide a link to the source and a quote from the source. There is not right answer here, but please provide a thoughtful answer, I am curious to see what you find.</p></li>
+<li><strong>Numerical vs Categorical Encoding:</strong> There are two modelsin Python written above. For each language, the models differ by how zip code is modelled, either as a numerical variable or as a categorical variable. Given what you know about zip codes and real estate prices, how should zip code be modelled, numerically or categorically? Is zipcode and ordinal or non-ordinal variable?</li>
 </ol>
+<p>Answer: Zip code should be modeled as a categorical variable, not a numerical one. Even though zip codes are numbers, they don’t have any real order or ranking, so treating them like regular numbers can mislead the model. In this case, zip code is a non-ordinal variable, meaning the values are just labels for locations, not something where higher or lower numbers mean anything. Modeling it as a category lets the model understand that each zip code represents a different area, which is more realistic for real estate prices.</p>
+<ol start="2" type="1">
+<li><strong>R vs Python Implementation Differences:</strong> When modelling zip code as a categorical variable, the output tree and feature importance would differ quite significantly had you used R as opposed to Python. Investigate why this is the case. What does R offer that Python does not? Which language would you say does a better job of modelling zip code as a categorical variable? Can you quote the documentation at <a href="https://scikit-learn.org/stable/modules/tree.html">https://scikit-learn.org/stable/modules/tree.html</a> suggesting a weakness in the Python implementation? If so, please provide a quote from the documentation.</li>
+</ol>
+<p>Answer: The main difference is how each language handles categories like zip codes. In R, tree models can treat zip codes as true categories and even group several of them together when making a split. In Python’s scikit-learn, zip codes have to be converted into numbers first, which can break the data into too many pieces and affect the results. Because of this, R is usually better for modeling something like zip code, since it keeps the data in its original categorical form. Python’s approach works, but the extra preprocessing can change how the tree looks and how important the variable seems.</p>
+<ol start="3" type="1">
+<li><strong>Are There Any Suggestions for Implementing Decision Trees in Python With Prioper Categorical Handling?</strong> Please poke around the Internet (AI is not as helpful with new libraries) for suggestions on how to implement decision trees in Python with better (i.e.&nbsp;not one-hot encoding) categorical handling. Please provide a link to the source and a quote from the source. There is not right answer here, but please provide a thoughtful answer, I am curious to see what you find.</li>
+</ol>
+<p>Answer: A better way to handle categorical variables like zip code in Python decision trees is to avoid one-hot encoding and instead use methods that keep the data more compact and meaningful. The article you found explains that decision trees are naturally capable of working with categories by grouping them, rather than splitting each value into its own column. In fact, it notes that “the algorithm evaluates all possible ways to divide the categories into two… sets,” which shows that trees can directly separate groups of categories without extra encoding. However, this approach becomes computationally expensive when there are many categories, which is why standard Python libraries like <code>scikit-learn</code> do not implement it. Because of this limitation, one-hot encoding is often used, but it can create too many features and make the model less efficient. A more practical alternative is target encoding, which replaces each category with the average value of the target variable for that group. This reduces the number of splits the tree needs to consider while still keeping useful information about each category. The article highlights this by explaining that mean target encoding “reduces the search space… without losing the optimal split.” Another strong option is to use newer libraries like CatBoost or LightGBM, which are designed to handle categorical variables more effectively without one-hot encoding. Overall, the key idea is that decision trees do not inherently require one-hot encoding, and better approaches focus on preserving category relationships while keeping the model efficient.</p>
 </section>
 <section id="grading-rubric" class="level2">
 <h2 class="anchored" data-anchor-id="grading-rubric">Grading Rubric 🎓</h2>
@@ -453,18 +459,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><strong>Numerical vs Categorical Analysis:</strong> Provide a clear, well-reasoned answer to question 1 about how zip codes should be modelled. Your answer should demonstrate understanding of why categorical variables need special treatment in decision trees.</li>
 </ol>
-</section>
-<section id="questions-to-answer-for-85-grade-on-challenge" class="level3">
-<h3 class="anchored" data-anchor-id="questions-to-answer-for-85-grade-on-challenge">Questions to Answer for 85% Grade on Challenge</h3>
+<p>Answer: ### Questions to Answer for 85% Grade on Challenge</p>
 <ol start="2" type="1">
 <li><strong>R vs Python Implementation Analysis:</strong> Provide a thorough analysis of question 2, including investigation of the official documentation for both <code>rpart</code> (R) and <code>sklearn.tree.DecisionTreeRegressor</code> (Python). Your analysis should explain the technical differences and provide a reasoned opinion about which implementation handles categorical variables better. You do NOT have to run R-code.</li>
 </ol>
+<p>Answer:</p>
 </section>
 <section id="questions-to-answer-for-95---100-grade-on-challenge" class="level3">
 <h3 class="anchored" data-anchor-id="questions-to-answer-for-95---100-grade-on-challenge">Questions to Answer for 95% - 100% Grade on Challenge</h3>
 <ol start="3" type="1">
 <li><strong>Professional Presentation:</strong> Your discussion answers should be written in a professional, engaging style that would be appropriate for a business audience learning about one-hot encoding and decision trees. Avoid technical jargon and focus on practical implications. Include a specific quote from the official documentation of <code>sklearn.tree.DecisionTreeRegressor</code> that supports your analysis.</li>
 </ol>
+<p>Answer:</p>
 </section>
 </section>
 <section id="submission-checklist" class="level2">
